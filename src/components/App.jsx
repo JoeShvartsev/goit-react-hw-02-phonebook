@@ -28,8 +28,8 @@ export class App extends Component {
 
     const isDuplicate = contacts.some(
       (contact) =>
-        contact.name.toLowerCase() === data.name.toLowerCase() ||
-        contact.number === data.number
+        contact.name.toLowerCase() === data.name.toLowerCase() 
+      
     );
 
     if (isDuplicate) {
