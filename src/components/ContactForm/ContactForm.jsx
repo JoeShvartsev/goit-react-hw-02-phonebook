@@ -1,49 +1,63 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import css from "./ContactForm.module.css";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
+import css from './ContactForm.module.css';
+import { contactsSelector } from 'store/contacts/selectors';
+import { createContact } from 'store/contacts/contactsReducer';
 
-export const ContactForm = ({ addData }) => {
-  const [value, setValue] = useState({ name: "", number: "" });
+export const ContactForm = () => {
+  const [contactData, setContactData] = useState({ name: '', number: '' });
+  const { contacts } = useSelector(contactsSelector);
+  const createdContact = [...contacts, { name: contactData.name, number: contactData.number, id: nanoid() }]
+  const dispatch = useDispatch();
+  
+  const addContact = data => {
+    const isDuplicate = contacts.some(
+      contact => contact.name.toLowerCase() === data.name.toLowerCase()
+    );
+    if (isDuplicate) {
+      alert(`${data.name} is already in your contacts.`);
+      return;
+    }
+    dispatch(createContact(createdContact))
+  };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.currentTarget;
     if (
-      (name === "name" && !/^[A-Za-zА-Яа-яЁё\s]+$/.test(value)) ||
-      (name === "number" && isNaN(value))
+      (name === 'name' && !/^[A-Za-zА-Яа-яЁё\s]+$/.test(value)) ||
+      (name === 'number' && isNaN(value))
     ) {
-      return setValue((prevState) => ({
+      return setContactData(prevState => ({
         ...prevState,
-        [name]: "",
+        [name]: '',
       }));
     }
-    setValue((prevState) => ({
+    setContactData(prevState => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const onFormSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    addData({
-      name: value.name,
-      number: value.number,
-    });
-    setValue({
-      name: "",
-      number: "",
+    addContact({ name: contactData.name, number: contactData.number });
+    setContactData({
+      name: '',
+      number: '',
     });
   };
 
   return (
     <div className={css.form}>
-      <form onSubmit={onFormSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <h2 className={css.title}>Name:</h2>
           <input
             className={css.input}
             type="text"
             name="name"
-            value={value.name}
+            value={contactData.name}
             onChange={handleChange}
           />
           <h2 className={css.title}>Number:</h2>
@@ -51,7 +65,7 @@ export const ContactForm = ({ addData }) => {
             className={css.input}
             type="text"
             name="number"
-            value={value.number}
+            value={contactData.number}
             onChange={handleChange}
           />
         </div>
@@ -62,85 +76,4 @@ export const ContactForm = ({ addData }) => {
     </div>
   );
 };
-
-ContactForm.propTypes = {
-  addData: PropTypes.func.isRequired,
-};
-
-
-
-
-
-
-// import React, { Component } from "react";
-// import PropTypes from "prop-types";
-// import css from "./ContactForm.module.css";
-
-// export class ContactForm extends Component {
-//   state = {
-//     name: "",
-//     number: "",
-//   };
-
-//   static propTypes = {
-//     addData: PropTypes.func.isRequired,
-//   };
-
-//   handleChange = (e) => {
-//     const { name, value } = e.currentTarget;
-//     if (
-//       (name === "name" && !/^[A-Za-zА-Яа-яЁё\s]+$/.test(value)) ||
-//       (name === "number" && isNaN(value))
-//     ) {
-//       return this.setState({
-//         [name]: "",
-//       });}
-//     this.setState({
-//       [name]: value,
-//     });
-//   };
-
-//   onFormSubmit = (e) => {
-//     e.preventDefault();
-//     this.props.addData({
-//       name: this.state.name,
-//       number: this.state.number,
-//     });
-//     this.setState({
-//       name: "",
-//       number: "",
-//     });
-//   };
-
-//   render() {
-//     const { name, number } = this.state;
-
-//     return (
-//       <div className={css.form}>
-//         <form onSubmit={this.onFormSubmit}>
-//           <div>
-//             <h2 className={css.title}>Name:</h2>
-//             <input
-//               className={css.input}
-//               type="text"
-//               name="name"
-//               value={name}
-//               onChange={this.handleChange}
-//             />
-//             <h2 className={css.title}>Number:</h2>
-//             <input
-//               className={css.input}
-//               type="text"
-//               name="number"
-//               value={number}
-//               onChange={this.handleChange}
-//             />
-//           </div>
-//           <button className={css.button} type="submit">Submit</button>
-//         </form>
-//       </div>
-//     );
-//   }
-// }
-
 

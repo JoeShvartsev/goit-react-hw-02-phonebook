@@ -1,15 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import css from "./Filter.module.css";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { createFilter } from 'store/filter/filterReducer';
+import css from './Filter.module.css';
 
-export const Filter = ({ searchQuery, handleSearchChange }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+
+  const handleSearchChange = e => {
+    dispatch(createFilter(e.currentTarget.value));
+  };
+
   return (
     <div className={css.container}>
       <h5 className={css.title}>Find contacts by name:</h5>
       <input
         className={css.input}
         type="text"
-        value={searchQuery}
         onChange={handleSearchChange}
         placeholder="Search contacts"
       />
@@ -17,7 +23,5 @@ export const Filter = ({ searchQuery, handleSearchChange }) => {
   );
 };
 
-Filter.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
-  handleSearchChange: PropTypes.func.isRequired,
-};
+
+
