@@ -4,13 +4,16 @@ import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 import { contactsSelector } from 'store/contacts/selectors';
 import { createContact } from 'store/contacts/contactsReducer';
+import { updateContactsThunk } from 'store/contacts/actions';
+
 
 export const ContactForm = () => {
-  const [contactData, setContactData] = useState({ name: '', number: '' });
+  const [contactData, setContactData] = useState({ name: '', number: ''});
   const { contacts } = useSelector(contactsSelector);
   const createdContact = [...contacts, { name: contactData.name, number: contactData.number, id: nanoid() }]
   const dispatch = useDispatch();
   
+
   const addContact = data => {
     const isDuplicate = contacts.some(
       contact => contact.name.toLowerCase() === data.name.toLowerCase()
@@ -20,6 +23,7 @@ export const ContactForm = () => {
       return;
     }
     dispatch(createContact(createdContact))
+    dispatch(updateContactsThunk(contactData))
   };
 
   const handleChange = e => {
