@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 import { contactsSelector } from 'store/contacts/selectors';
 import { createContact } from 'store/contacts/contactsReducer';
-import { updateContactsThunk } from 'store/contacts/actions';
-
+import { getContactsThunk, updateContactsThunk } from 'store/contacts/actions';
 
 export const ContactForm = () => {
-  const [contactData, setContactData] = useState({ name: '', number: ''});
+  const [contactData, setContactData] = useState({ name: '', number: '' });
   const { contacts } = useSelector(contactsSelector);
-  const createdContact = [...contacts, { name: contactData.name, number: contactData.number, id: nanoid() }]
+  const createdContact = [
+    ...contacts,
+    { name: contactData.name, number: contactData.number, id: nanoid() },
+  ];
   const dispatch = useDispatch();
-  
+
+  useEffect(() => {
+    dispatch(getContactsThunk());
+  }, [dispatch]);
 
   const addContact = data => {
     const isDuplicate = contacts.some(
@@ -22,10 +27,12 @@ export const ContactForm = () => {
       alert(`${data.name} is already in your contacts.`);
       return;
     }
-    dispatch(createContact(createdContact))
-    dispatch(updateContactsThunk(contactData))
-  };
 
+    dispatch(createContact(createdContact));
+    dispatch(updateContactsThunk(contactData)).then(() => {
+      dispatch(getContactsThunk());
+    });
+  };
   const handleChange = e => {
     const { name, value } = e.currentTarget;
     if (
@@ -80,4 +87,3 @@ export const ContactForm = () => {
     </div>
   );
 };
-
