@@ -3,19 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createContact } from 'store/contacts/contactsReducer';
 import { contactsSelector } from 'store/contacts/selectors';
 import { filterSelectors } from 'store/filter/selectors';
-
 import { deleteContactsThunk } from 'store/contacts/actions';
 import styles from './ContactList.module.css';
+import { userSelectors } from 'store/user/selectors';
 
-export const ContactList = () => {
-  const {contacts} = useSelector(contactsSelector)
-  const {filter} = useSelector(filterSelectors)
+const ContactList = () => {
+  const { contacts } = useSelector(contactsSelector);
+  const { filter } = useSelector(filterSelectors);
   const dispatch = useDispatch();
-  
+  const { token } = useSelector(userSelectors);
+
   const deleteContact = contactID => {
-    const updatedContacts = contacts.filter(contact => contact.id !== contactID);
+    const updatedContacts = contacts.filter(
+      contact => contact.id !== contactID
+    );
     dispatch(createContact(updatedContacts));
-    dispatch(deleteContactsThunk(contactID))
+    dispatch(deleteContactsThunk({ id: contactID, token: token }));
   };
 
   const filteredContacts = contacts.filter(contact =>
@@ -24,6 +27,7 @@ export const ContactList = () => {
 
   return (
     <div>
+      <h2 className={styles.title}>Contacts</h2>
       <ul className={styles['contact-list']}>
         {filteredContacts.map(contact => (
           <li key={contact.id} className={styles['contact-item']}>
@@ -42,6 +46,4 @@ export const ContactList = () => {
     </div>
   );
 };
-
-
-
+export default ContactList;

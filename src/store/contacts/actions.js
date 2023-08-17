@@ -6,20 +6,20 @@ import { updateContacts } from 'API/Update';
 
 export const getContactsThunk = createAsyncThunk(
   'contacts/getContacts',
-  async (_, { rejectWithValue }) => {
+  async (token, { rejectWithValue }) => {
     try {
-      return await getContacts();
+      return await getContacts(token);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const deleteContactsThunk = createAsyncThunk(
   'contacts/deleteContacts',
-  async (id, { rejectWithValue }) => {
+  async ({ id, token }, { rejectWithValue }) => {
     try {
-      return await deleteContact(id);
+      return await deleteContact(id, token);
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -27,11 +27,11 @@ export const deleteContactsThunk = createAsyncThunk(
 );
 export const updateContactsThunk = createAsyncThunk(
   'contacts/updateContacts',
-  async (data, { rejectWithValue }) => {
+  async ({data,token}, { rejectWithValue }) => {
     try {
-      return await updateContacts(data);
+      return await updateContacts(data,token);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );

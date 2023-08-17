@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createFilter } from 'store/filter/filterReducer';
 import css from './Filter.module.css';
 
-export const Filter = () => {
+const Filter = () => {
   const dispatch = useDispatch();
 
   const handleSearchChange = e => {
@@ -22,6 +22,4 @@ export const Filter = () => {
     </div>
   );
 };
-
-
-
+export default Filter;

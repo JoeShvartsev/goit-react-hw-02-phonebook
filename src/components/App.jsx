@@ -1,22 +1,23 @@
 import React from "react";
-import { ContactForm } from "./ContactForm/ContactForm";
-import { ContactList } from "./ContactList/ContactList";
-import { Filter } from "./Filter/Filter";
-import css from "./App.module.css";
-import Loader from "./Loader/Loader";
-import { useSelector } from "react-redux";
-import { contactsSelector } from 'store/contacts/selectors';
+import { Routes, Route } from "react-router-dom";
+import ContactForm from "./ContactForm/ContactForm";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
+import Layout from "./Layout/Layout";
+import Header from "./Header/Header";
 
 export const App = () => {
-  const { isLoading } = useSelector(contactsSelector);
+  
   return (
     <div>
-      <h1 className={css.title}>Phonebook</h1>
-      <ContactForm />
-      <h2 className={css.title}>Contacts</h2>
-      <Filter/>
-      {isLoading&&<Loader/>}
-      <ContactList />
+      <Routes>
+        <Route path="/" element={<Header/>}></Route>
+        <Route path='/register' element={<Register/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/contacts' element={<Layout/>}>
+          <Route index element={<ContactForm/>}/>
+        </Route>
+      </Routes>
     </div>
   );
 };

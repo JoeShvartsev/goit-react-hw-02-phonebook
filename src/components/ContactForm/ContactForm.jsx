@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
-import css from './ContactForm.module.css';
 import { contactsSelector } from 'store/contacts/selectors';
 import { createContact } from 'store/contacts/contactsReducer';
 import { getContactsThunk, updateContactsThunk } from 'store/contacts/actions';
+import Filter from 'components/Filter/Filter';
+import Loader from 'components/Loader/Loader';
+import ContactList from 'components/ContactList/ContactList';
+import { userSelectors } from 'store/user/selectors';
+import css from './ContactForm.module.css';
 
-export const ContactForm = () => {
+const ContactForm = () => {
   const [contactData, setContactData] = useState({ name: '', number: '' });
   const { contacts } = useSelector(contactsSelector);
+  const { isLoading } = useSelector(contactsSelector);
+  const { token } = useSelector(userSelectors);
+
   const createdContact = [
     ...contacts,
     { name: contactData.name, number: contactData.number, id: nanoid() },
@@ -16,8 +23,8 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getContactsThunk());
-  }, [dispatch]);
+    dispatch(getContactsThunk(token));
+  }, [dispatch, token]);
 
   const addContact = data => {
     const isDuplicate = contacts.some(
@@ -29,8 +36,13 @@ export const ContactForm = () => {
     }
 
     dispatch(createContact(createdContact));
-    dispatch(updateContactsThunk(contactData)).then(() => {
-      dispatch(getContactsThunk());
+    dispatch(
+      updateContactsThunk({
+        data: contactData,
+        token: token,
+      })
+    ).then(() => {
+      dispatch(getContactsThunk(token));
     });
   };
   const handleChange = e => {
@@ -84,6 +96,11 @@ export const ContactForm = () => {
           Submit
         </button>
       </form>
+      <Filter />
+      {isLoading && <Loader />}
+      <ContactList />
     </div>
   );
 };
+
+export default ContactForm;

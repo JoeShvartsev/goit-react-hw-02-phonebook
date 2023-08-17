@@ -1,15 +1,16 @@
 import { instance } from './Instance';
 
-export const getContacts = async token => {
+export const logOut = async token => {
   try {
-    const response = await instance.get('contacts', {
+    const {data} = await instance.post('users/logout',{
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
-    return response.data;
+
+    return data; 
   } catch (error) {
     throw error;
   }
 };
+
