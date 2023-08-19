@@ -14,7 +14,7 @@ export const handleFullfilledSignIn =(state,{payload}) => {
 }
 export const handleRejected =(state, {payload}) => {
   state.isLoading = false;
-  state.error = payload.message;
+  state.error = payload;
 }
   export const handleFullfilledLogOut =(state) => {
     state.isLoading = false;
