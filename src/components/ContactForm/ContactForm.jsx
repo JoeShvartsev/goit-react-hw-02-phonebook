@@ -17,9 +17,9 @@ const ContactForm = () => {
   const { isLoading } = useSelector(contactsSelector);
   const { token } = useSelector(userSelectors);
   const dispatch = useDispatch()
-  
+
   useEffect(()=>{
-    dispatch(refreshUserThunk)
+    dispatch(refreshUserThunk())
   },[dispatch])
   
   const createdContact = [
