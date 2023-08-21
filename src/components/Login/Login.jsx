@@ -24,7 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/contacts');
+      navigate('/contacts');  
     }
   }, [token, navigate]);
 

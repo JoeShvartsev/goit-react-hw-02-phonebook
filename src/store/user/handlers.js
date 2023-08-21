@@ -12,6 +12,11 @@ export const handleFullfilledSignIn =(state,{payload}) => {
   state.token = payload.token
   state.profile = payload.user
 }
+export const handleFullfilledRefresh =(state,{payload}) => {
+  state.isLoading = false;
+  state.token = payload.token
+  state.profile = payload.user
+}
 export const handleRejected =(state, {payload}) => {
   state.isLoading = false;
   state.error = payload;
