@@ -43,7 +43,8 @@ export const logOutUserThunk = createAsyncThunk(
 export const refreshUserThunk = createAsyncThunk(
   'user/refresh',
   async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('token');
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log(token)
     try {
       const data = await refresh(token);
       console.log(data);
