@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelectors } from 'store/user/selectors';
 // import { useNavigate } from 'react-router-dom';
-import { logOutUserThunk } from 'store/user/actions';
+import { logOutUserThunk } from 'store/user/operations';
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,7 +23,7 @@ const UserMenu = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logOutUserThunk(token));
+    dispatch(logOutUserThunk( ));
     // navigate('/')
   };
 

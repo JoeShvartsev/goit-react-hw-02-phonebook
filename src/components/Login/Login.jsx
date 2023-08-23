@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link,} from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './Login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { signInUserThunk } from 'store/user/actions';
-import { userSelectors } from 'store/user/selectors';
+import { useDispatch,} from 'react-redux';
+import { signInUserThunk } from 'store/user/operations';
+
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { token } = useSelector(userSelectors);
+
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -22,11 +21,7 @@ const Login = () => {
     dispatch(signInUserThunk(values));
   };
 
-  useEffect(() => {
-    if (token) {
-      navigate('/contacts');  
-    }
-  }, [token, navigate]);
+  
 
   return (
     <div className={styles.loginContainer}>

@@ -1,18 +1,18 @@
-import { combineReducers } from "redux";
-import { contactsReducer } from "./contacts/contactsReducer";
-import { filterReducer } from "./filter/filterReducer";
-import { userReducer } from "./user/userReducer";
+import { combineReducers } from 'redux';
+import { contactsReducer } from './contacts/contactsReducer';
+import { filterReducer } from './filter/filterReducer';
+import { usersReducer } from './user/userSlice';
 import storage from 'redux-persist/lib/storage';
-import persistReducer from "redux-persist/es/persistReducer";
+import persistReducer from 'redux-persist/es/persistReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['token'], 
+  whitelist: ['profile'],
 };
 
-const persistedReducer = persistReducer(persistConfig, userReducer);
+const persistedReducer = persistReducer(persistConfig, usersReducer);
 export const reducer = combineReducers({
-  contacts:contactsReducer,
-  filter:filterReducer,
-  user: persistedReducer
-})
+  contacts: contactsReducer,
+  filter: filterReducer,
+  user: persistedReducer,
+});

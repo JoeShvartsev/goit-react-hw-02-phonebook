@@ -3,15 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import styles from './Register.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { signUpUserThunk } from 'store/user/actions';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { userSelectors } from 'store/user/selectors';
+import { useDispatch} from 'react-redux';
+import { signUpUserThunk } from 'store/user/operations';
+
 
 const Register = () => {
-  const { token } = useSelector(userSelectors);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
@@ -28,9 +24,6 @@ const Register = () => {
     console.log(values);
     dispatch(signUpUserThunk(values));
   };
-  useEffect(() => {
-    token && navigate('/contacts');
-  }, [token, navigate]);
 
   return (
     <div className={styles.registerContainer}>
