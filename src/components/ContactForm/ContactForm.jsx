@@ -9,7 +9,7 @@ import Loader from 'components/Loader/Loader';
 import ContactList from 'components/ContactList/ContactList';
 import { userSelectors } from 'store/user/selectors';
 import css from './ContactForm.module.css';
-import { refreshUserThunk } from 'store/user/operations';
+// import { refreshUserThunk } from 'store/user/operations';
 
 const ContactForm = () => {
   const [contactData, setContactData] = useState({ name: '', number: '' });

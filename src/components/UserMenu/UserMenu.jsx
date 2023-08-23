@@ -13,7 +13,7 @@ const UserMenu = () => {
   const { profile } = useSelector(userSelectors);
   // const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { token } = useSelector(userSelectors);
+  // const { token } = useSelector(userSelectors);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
