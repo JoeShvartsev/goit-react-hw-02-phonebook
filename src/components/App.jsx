@@ -6,7 +6,7 @@ import Login from './Login/Login';
 import Layout from './Layout/Layout';
 import Header from './Header/Header';
 import PublicGuard from 'guards/PublicGuard';
-import PrivateGuard from 'guards/PrivateGuard';
+// import PrivateGuard from 'guards/PrivateGuard';
 
 export const App = () => {
   return (
@@ -33,9 +33,9 @@ export const App = () => {
           <Route
             index
             element={
-              <PrivateGuard>
+              
                 <ContactForm />
-              </PrivateGuard>
+             
             }
           />
         </Route>
