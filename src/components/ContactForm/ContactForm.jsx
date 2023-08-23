@@ -29,7 +29,7 @@ const ContactForm = () => {
   
 
   useEffect(() => {
-    dispatch(getContactsThunk(token));
+    token&&dispatch(getContactsThunk(token));
   }, [dispatch, token]);
 
   const addContact = data => {
