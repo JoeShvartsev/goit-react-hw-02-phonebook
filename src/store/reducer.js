@@ -7,7 +7,7 @@ import persistReducer from 'redux-persist/es/persistReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['profile'],
+  whitelist: ['token'],
 };
 
 const persistedReducer = persistReducer(persistConfig, usersReducer);
