@@ -8,13 +8,15 @@ import Header from './Header/Header';
 import PublicGuard from 'guards/PublicGuard';
 import PrivateGuard from 'guards/PrivateGuard';
 import { refreshUserThunk } from 'store/user/operations';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSelectors } from 'store/user/selectors';
 
 export const App = () => {
   const dispatch = useDispatch();
+  const { token } = useSelector(userSelectors);
   useEffect(() => {
-    dispatch(refreshUserThunk());
-  }, [dispatch]);
+    token&&dispatch(refreshUserThunk());
+  }, [dispatch,token]);
   return (
     <div>
       <Routes>
