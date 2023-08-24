@@ -9,25 +9,21 @@ import Loader from 'components/Loader/Loader';
 import ContactList from 'components/ContactList/ContactList';
 import { userSelectors } from 'store/user/selectors';
 import css from './ContactForm.module.css';
-import { refreshUserThunk } from 'store/user/operations';
 
 const ContactForm = () => {
   const [contactData, setContactData] = useState({ name: '', number: '' });
   const { contacts } = useSelector(contactsSelector);
   const { isLoading } = useSelector(contactsSelector);
   const { token } = useSelector(userSelectors);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
- 
-  
   const createdContact = [
     ...contacts,
     { name: contactData.name, number: contactData.number, id: nanoid() },
   ];
-  
 
   useEffect(() => {
-    token&&dispatch(getContactsThunk(token));
+    token && dispatch(getContactsThunk(token));
   }, [dispatch, token]);
 
   const addContact = data => {

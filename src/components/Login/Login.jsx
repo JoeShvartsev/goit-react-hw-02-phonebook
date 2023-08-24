@@ -1,15 +1,13 @@
 import React from 'react';
-import { Link,} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './Login.module.css';
-import { useDispatch,} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signInUserThunk } from 'store/user/operations';
-
 
 const Login = () => {
   const dispatch = useDispatch();
-
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -17,11 +15,8 @@ const Login = () => {
   });
 
   const handleSubmit = values => {
-    console.log(values);
     dispatch(signInUserThunk(values));
   };
-
-  
 
   return (
     <div className={styles.loginContainer}>

@@ -10,7 +10,6 @@ import { logOutUserThunk } from 'store/user/operations';
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { profile } = useSelector(userSelectors);
-  console.log(profile)
   const dispatch = useDispatch();
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -22,7 +21,6 @@ const UserMenu = () => {
 
   const handleLogout = () => {
     dispatch(logOutUserThunk( ));
-    // navigate('/')
   };
 
   return (
