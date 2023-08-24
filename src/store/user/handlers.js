@@ -20,7 +20,7 @@ export const handleFullfilledSignIn =(state,{payload}) => {
 }
 export const handleFullfilledRefresh =(state,{payload}) => {
   state.isLoading = false;
-  state.profile = payload.user
+  state.profile = payload
   state.isLoggedIn = true;
 }
 

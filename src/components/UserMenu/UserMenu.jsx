@@ -5,15 +5,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelectors } from 'store/user/selectors';
-// import { useNavigate } from 'react-router-dom';
 import { logOutUserThunk } from 'store/user/operations';
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { profile } = useSelector(userSelectors);
-  // const navigate = useNavigate();
+  console.log(profile)
   const dispatch = useDispatch();
-  // const { token } = useSelector(userSelectors);
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };

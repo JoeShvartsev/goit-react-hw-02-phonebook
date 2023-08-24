@@ -5,6 +5,6 @@ import { userSelectors } from 'store/user/selectors';
 
 const PrivateGuard = ({children}) => {
   const {isLoggedIn} = useSelector(userSelectors);
-  return isLoggedIn ? children:<Navigate to="/"/>}
+  return isLoggedIn ? children:<Navigate to="/login"/>}
 
 export default PrivateGuard

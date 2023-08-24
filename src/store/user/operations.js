@@ -42,29 +42,30 @@ export const logOutUserThunk = createAsyncThunk(
   'user/logout',
   async (_, thunkAPI) => {
     try {
-      await instance.post('users/logout');
+      await axios.post('https://connections-api.herokuapp.com/users/logout');
       token.unset();
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
-);
+  })
 
-export const refreshUserThunk = createAsyncThunk(
-  'user/refresh',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.user.token;
-    console.log(persistedToken);
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue('Unable to fetch user');
+  export const refreshUserThunk = createAsyncThunk(
+    'user/refresh',
+    async (_, thunkAPI) => {
+      const state = thunkAPI.getState();
+      const persistedToken = state.user.token;
+    
+      if (persistedToken === null) {
+        return thunkAPI.rejectWithValue('Unable to fetch user');
+      }
+      token.set(persistedToken);
+      try {
+        const { data } = await axios.get(
+          'https://connections-api.herokuapp.com/users/current'
+        );
+        return data;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
     }
-    token.set(persistedToken);
-    try {
-      const { data } = await instance.get('users/current');
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+  );
