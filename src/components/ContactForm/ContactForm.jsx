@@ -42,7 +42,7 @@ const ContactForm = () => {
         token: token,
       })
     ).then(() => {
-      dispatch(getContactsThunk(token));
+      token&&dispatch(getContactsThunk(token));
     });
   };
   const handleChange = e => {
